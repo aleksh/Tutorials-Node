@@ -1,6 +1,7 @@
 ## Available routers
 
 GET - http://localhost:3000/    ``` Return all users ```
+
 GET - http://localhost:3000/users   ``` Return all users ```
 
 GET - http://localhost:3000/user?id=1   ``` Return a user ```
