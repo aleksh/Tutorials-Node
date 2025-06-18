@@ -18,9 +18,8 @@ export function writeData(data) {
 
 export function parseInputParams(items) {
     let isFindCommand = false;
-    let isFindName = false;
-    let isFindId = false;
-    let isFindFreq = false;
+    let isFindValue = false;
+    let currentKey;
 
     const params = {command: '', data: {} }
 
@@ -35,42 +34,23 @@ export function parseInputParams(items) {
                     return;
                 }
 
-                if(isFindName) {
-                    params['data']['name'] = str;
-                    isFindName = false;
+                if(isFindValue) {
+                    params.data[currentKey] = str;
+                    currentKey = '';
+                    isFindValue = false;
                     return;
                 }
 
-                if(isFindId) {
-                    params['data']['id'] = str;
-                    isFindId = false;
+                if(str.startsWith("--")) {
+                    isFindValue = true;
+                    currentKey = str.substring(2);
                     return;
-                }
-
-                if(isFindFreq) {
-                    params['data']['freq'] = str;
-                    isFindFreq = false;
-                    return;
-                }
-
-                switch(str) {
-                    case "--name":
-                        isFindName = true;
-                        break;
-                    case "--id":
-                        isFindId = true;
-                        break;
-                    case "--freq":
-                        isFindFreq = true;
-                        break;
-                    default:
-                        break;
                 }
             }
 
         })
     }
-    
+   
     return params
 }
 
